@@ -10,26 +10,13 @@ interface ScoreCardProps {
   onClick?: () => void;
 }
 
-const ScoreCard: React.FC<ScoreCardProps> = ({ title, score, maxScore, type, subtitle, onClick }) => {
-  const percentage = (score / maxScore) * 100;
-  
-  const getScoreColor = (score: number, maxScore: number, type: string) => {
-    const ratio = score / maxScore;
-    if (type === 'total') {
-      if (ratio >= 0.8) return '#dc2626'; // red
-      if (ratio >= 0.6) return '#ea580c'; // orange
-      if (ratio >= 0.4) return '#facc15'; // yellow
-      if (ratio >= 0.2) return '#16a34a'; // green
-      return '#059669'; // emerald
-    } else {
-      if (ratio >= 0.8) return '#dc2626';
-      if (ratio >= 0.6) return '#ea580c';
-      if (ratio >= 0.4) return '#facc15';
-      return '#16a34a';
-    }
+const ScoreCard: React.FC<ScoreCardProps> = ({ title, score, type, subtitle, onClick }) => {
+  const getScoreColor = () => {
+    // Always return black - no color coding based on score
+    return '#000000';
   };
 
-  const scoreColor = getScoreColor(score, maxScore, type);
+  const scoreColor = getScoreColor();
 
   return (
     <div 
@@ -46,21 +33,6 @@ const ScoreCard: React.FC<ScoreCardProps> = ({ title, score, maxScore, type, sub
           <span className="score-card__number" style={{ color: scoreColor }}>
             {score.toFixed(1)}
           </span>
-          <span className="score-card__max">/{maxScore}</span>
-        </div>
-        
-        <div className="score-card__progress">
-          <div 
-            className="score-card__progress-bar" 
-            style={{ 
-              width: `${percentage}%`,
-              backgroundColor: scoreColor 
-            }}
-          />
-        </div>
-        
-        <div className="score-card__percentage">
-          {percentage.toFixed(1)}%
         </div>
       </div>
     </div>

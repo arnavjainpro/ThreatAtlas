@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/AuthProvider';
 import './ApplicationSelector.css';
 
 interface Application {
@@ -15,6 +16,7 @@ interface Application {
 
 const ApplicationSelector: React.FC = () => {
   const navigate = useNavigate();
+  const { signOut, user } = useAuth();
   const [selectedApp, setSelectedApp] = useState<string | null>(null);
   const [scrollOpacity, setScrollOpacity] = useState(1);
 
@@ -107,6 +109,12 @@ const ApplicationSelector: React.FC = () => {
     navigate(`/dashboard/${appId}`);
   };
 
+  const handleLogout = async () => {
+    if (window.confirm('Are you sure you want to logout?')) {
+      await signOut();
+    }
+  };
+
   const getRiskColor = (riskLevel: string) => {
     switch (riskLevel) {
       case 'critical': return '#dc2626';
@@ -136,6 +144,15 @@ const ApplicationSelector: React.FC = () => {
         </div>
         <div className="header__info">
           <p className="info-text">Select an application to view its security assessment</p>
+        </div>
+        <div className="header__user">
+          <div className="user-info">
+            <span className="user-email">{user?.email}</span>
+            <button className="logout-btn" onClick={handleLogout} title="Logout">
+              <span className="logout-icon">⏻</span>
+              Logout
+            </button>
+          </div>
         </div>
       </div>
 

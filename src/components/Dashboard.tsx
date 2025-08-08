@@ -41,10 +41,14 @@ const Dashboard: React.FC = () => {
 
   // Initialize with actual data instead of loading state
   useEffect(() => {
-    // Simulate vulnerability scan results
-    const baseScore = Math.random() * 10;
-    const actionableScore = Math.random() * 10;
-    const totalScore = baseScore + actionableScore;
+    // Simulate vulnerability scan results - higher scores mean better security
+    const vulnerabilityRisk = Math.random() * 10; // Raw vulnerability risk (0-10)
+    const actionableRisk = Math.random() * 10; // Raw actionable risk (0-10)
+    
+    // Invert scores so higher values mean more secure
+    const baseScore = 10 - vulnerabilityRisk;
+    const actionableScore = 10 - actionableRisk;
+    const totalScore = (baseScore + actionableScore) / 2; // Average for total score out of 10
 
     setVulnerabilityData({
       projectName: `${appConfig.name} - ${appConfig.environment}`,
@@ -69,10 +73,14 @@ const Dashboard: React.FC = () => {
   }, []);
 
   const handleRecalculate = () => {
-    // Immediate recalculation without loading state
-    const baseScore = Math.random() * 10;
-    const actionableScore = Math.random() * 10;
-    const totalScore = baseScore + actionableScore;
+    // Immediate recalculation without loading state - higher scores mean better security
+    const vulnerabilityRisk = Math.random() * 10; // Raw vulnerability risk (0-10)
+    const actionableRisk = Math.random() * 10; // Raw actionable risk (0-10)
+    
+    // Invert scores so higher values mean more secure
+    const baseScore = 10 - vulnerabilityRisk;
+    const actionableScore = 10 - actionableRisk;
+    const totalScore = (baseScore + actionableScore) / 2; // Average for total score out of 10
 
     setVulnerabilityData(prev => ({
       ...prev,
@@ -123,8 +131,8 @@ const Dashboard: React.FC = () => {
 
       <div className="dashboard__scores">
         <ScoreCard
-          title="Base Vulnerable Score"
-          subtitle="Core security vulnerabilities detected"
+          title="Base Security Score"
+          subtitle="Core security strength assessment"
           score={vulnerabilityData.scores.baseVulnerableScore}
           maxScore={10}
           type="base"
@@ -132,8 +140,8 @@ const Dashboard: React.FC = () => {
         />
         
         <ScoreCard
-          title="Actionable Score"
-          subtitle="Remediable security issues"
+          title="Actionable Security Score"
+          subtitle="Proactive security measures"
           score={vulnerabilityData.scores.actionableScore}
           maxScore={10}
           type="actionable"
@@ -141,10 +149,10 @@ const Dashboard: React.FC = () => {
         />
         
         <ScoreCard
-          title="Total Vulnerability Score"
-          subtitle="Combined risk assessment"
+          title="Total Security Score"
+          subtitle="Overall security posture"
           score={vulnerabilityData.scores.totalScore}
-          maxScore={20}
+          maxScore={10}
           type="total"
           onClick={() => navigate(`/dashboard/${appId}/total-vulnerability`)}
         />
@@ -188,10 +196,10 @@ const Dashboard: React.FC = () => {
       <div className="dashboard__footer">
         <p className="footer__text">
           Powered by ThreatAtlas Security Engine • 
-          <span className={`status ${getSeverityClass(vulnerabilityData.scores.totalScore, 20)}`}>
-            {vulnerabilityData.scores.totalScore < 5 ? 'Low Risk' : 
-             vulnerabilityData.scores.totalScore < 10 ? 'Medium Risk' :
-             vulnerabilityData.scores.totalScore < 15 ? 'High Risk' : 'Critical Risk'}
+          <span className={`status ${getSeverityClass(10 - vulnerabilityData.scores.totalScore, 10)}`}>
+            {vulnerabilityData.scores.totalScore >= 8 ? 'Excellent Security' : 
+             vulnerabilityData.scores.totalScore >= 6 ? 'Good Security' :
+             vulnerabilityData.scores.totalScore >= 4 ? 'Moderate Security' : 'Needs Improvement'}
           </span>
         </p>
       </div>

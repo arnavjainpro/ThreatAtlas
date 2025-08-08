@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/AuthProvider';
 import './Sidebar.css';
 
 interface SidebarProps {
@@ -11,6 +12,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggle }) => {
   const [isHovered, setIsHovered] = useState(false);
   const { appId } = useParams<{ appId: string }>();
   const navigate = useNavigate();
+  const { signOut } = useAuth();
 
   const handleToggle = () => {
     const newCollapsed = !isCollapsed;
@@ -26,12 +28,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggle }) => {
     setIsHovered(false);
   };
 
-  const handleLogout = () => {
-    // In a real application, this would handle logout logic
-    // For now, we'll show an alert
+  const handleLogout = async () => {
+    // Use real authentication logout
     if (window.confirm('Are you sure you want to logout?')) {
-      alert('Logout functionality would be implemented here');
-      // window.location.href = '/login';
+      await signOut();
     }
   };
 

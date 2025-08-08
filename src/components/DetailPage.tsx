@@ -30,22 +30,14 @@ const DetailPage: React.FC<DetailPageProps> = ({
   additionalInfo,
   exportButton
 }) => {
-  const getScoreColor = (score: number, maxScore: number) => {
-    const ratio = score / maxScore;
-    if (ratio >= 0.8) return '#dc2626';
-    if (ratio >= 0.6) return '#ea580c';
-    if (ratio >= 0.4) return '#facc15';
-    if (ratio >= 0.2) return '#16a34a';
-    return '#059669';
+  const getScoreColor = () => {
+    // Always return black - no color coding based on score
+    return '#000000';
   };
 
-  const getSeverityLabel = (score: number, maxScore: number) => {
-    const ratio = score / maxScore;
-    if (ratio >= 0.8) return 'Critical';
-    if (ratio >= 0.6) return 'High';
-    if (ratio >= 0.4) return 'Medium';
-    if (ratio >= 0.2) return 'Low';
-    return 'Very Low';
+  const getSeverityLabel = () => {
+    // No severity labels - just return empty string
+    return '';
   };
 
   return (
@@ -70,7 +62,7 @@ const DetailPage: React.FC<DetailPageProps> = ({
               <div className="score-summary__value">
                 <span 
                   className="score-summary__number"
-                  style={{ color: getScoreColor(totalScore, maxScore) }}
+                  style={{ color: getScoreColor() }}
                 >
                   {totalScore.toFixed(1)}
                 </span>
@@ -81,15 +73,15 @@ const DetailPage: React.FC<DetailPageProps> = ({
                   className="score-summary__progress-bar"
                   style={{ 
                     width: `${(totalScore / maxScore) * 100}%`,
-                    backgroundColor: getScoreColor(totalScore, maxScore)
+                    backgroundColor: getScoreColor()
                   }}
                 />
               </div>
               <span 
                 className="score-summary__severity"
-                style={{ color: getScoreColor(totalScore, maxScore) }}
+                style={{ color: getScoreColor() }}
               >
-                {getSeverityLabel(totalScore, maxScore)} Risk
+                {getSeverityLabel()}
               </span>
             </div>
           </div>
@@ -110,7 +102,7 @@ const DetailPage: React.FC<DetailPageProps> = ({
                   <div className="breakdown-item__score">
                     <span 
                       className="breakdown-item__impact"
-                      style={{ color: getScoreColor(item.impact, item.maxImpact) }}
+                      style={{ color: getScoreColor() }}
                     >
                       {item.impact.toFixed(1)}
                     </span>
@@ -123,7 +115,7 @@ const DetailPage: React.FC<DetailPageProps> = ({
                     className="breakdown-item__progress-bar"
                     style={{ 
                       width: `${(item.impact / item.maxImpact) * 100}%`,
-                      backgroundColor: getScoreColor(item.impact, item.maxImpact)
+                      backgroundColor: getScoreColor()
                     }}
                   />
                 </div>

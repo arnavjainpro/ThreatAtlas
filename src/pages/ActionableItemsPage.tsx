@@ -3,15 +3,15 @@ import DetailPage from '../components/DetailPage';
 import ExcelExportButton from '../components/ExcelExportButton';
 
 const ActionableItemsPage: React.FC = () => {
-  const totalScore = 45.2;
-  const maxScore = 100;
+  const totalScore = 5.48; // Changed from 54.8/100 to 5.48/10
+  const maxScore = 10;
   
   const scoreBreakdown = [
     {
-      factor: 'Outdated Dependencies',
-      impact: 15.5,
-      maxImpact: 25,
-      description: 'Third-party packages with known security vulnerabilities',
+      factor: 'Dependency Security Status',
+      impact: 3.8, // Changed from 38.0/100 to 3.8/10
+      maxImpact: 10,
+      description: 'Security status of third-party packages and dependencies',
       recommendations: [
         'Update all packages to latest stable versions',
         'Implement automated dependency scanning',
@@ -20,10 +20,10 @@ const ActionableItemsPage: React.FC = () => {
       ]
     },
     {
-      factor: 'Missing Security Headers',
-      impact: 12.0,
-      maxImpact: 20,
-      description: 'HTTP security headers that should be implemented for better protection',
+      factor: 'Security Headers Implementation',
+      impact: 4.0, // Changed from 40.0/100 to 4.0/10
+      maxImpact: 10,
+      description: 'HTTP security headers implementation status',
       recommendations: [
         'Add Strict-Transport-Security header',
         'Implement Content-Security-Policy',
@@ -32,10 +32,10 @@ const ActionableItemsPage: React.FC = () => {
       ]
     },
     {
-      factor: 'Weak Password Policies',
-      impact: 8.5,
-      maxImpact: 15,
-      description: 'Current password requirements are below security best practices',
+      factor: 'Password Policy Strength',
+      impact: 4.3, // Changed from 43.3/100 to 4.3/10
+      maxImpact: 10,
+      description: 'Current password requirements and security standards',
       recommendations: [
         'Enforce minimum 12 character passwords',
         'Require mix of uppercase, lowercase, numbers, symbols',
@@ -44,10 +44,10 @@ const ActionableItemsPage: React.FC = () => {
       ]
     },
     {
-      factor: 'Insufficient Logging',
-      impact: 6.2,
-      maxImpact: 20,
-      description: 'Missing security event logging and monitoring capabilities',
+      factor: 'Security Logging & Monitoring',
+      impact: 6.9, // Changed from 69.0/100 to 6.9/10
+      maxImpact: 10,
+      description: 'Security event logging and monitoring capabilities',
       recommendations: [
         'Log all authentication attempts',
         'Implement security event monitoring',
@@ -56,10 +56,10 @@ const ActionableItemsPage: React.FC = () => {
       ]
     },
     {
-      factor: 'Unencrypted Data Transmission',
-      impact: 3.0,
-      maxImpact: 20,
-      description: 'Some data transmitted without proper encryption',
+      factor: 'Data Transmission Security',
+      impact: 8.5, // Changed from 85.0/100 to 8.5/10
+      maxImpact: 10,
+      description: 'Encryption and security of data transmission',
       recommendations: [
         'Enforce HTTPS for all endpoints',
         'Implement TLS 1.3 for better security',
@@ -75,11 +75,11 @@ const ActionableItemsPage: React.FC = () => {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
         <div style={{ background: 'rgba(51, 65, 85, 0.5)', padding: '16px', borderRadius: '8px' }}>
           <div style={{ color: '#10b981', fontSize: '1.5rem', fontWeight: 'bold' }}>67%</div>
-          <div style={{ color: '#cbd5e1', fontSize: '0.875rem' }}>Items Resolved</div>
+          <div style={{ color: '#cbd5e1', fontSize: '0.875rem' }}>Security Measures Implemented</div>
         </div>
         <div style={{ background: 'rgba(51, 65, 85, 0.5)', padding: '16px', borderRadius: '8px' }}>
           <div style={{ color: '#f59e0b', fontSize: '1.5rem', fontWeight: 'bold' }}>15</div>
-          <div style={{ color: '#cbd5e1', fontSize: '0.875rem' }}>In Progress</div>
+          <div style={{ color: '#cbd5e1', fontSize: '0.875rem' }}>Areas to Improve</div>
         </div>
         <div style={{ background: 'rgba(51, 65, 85, 0.5)', padding: '16px', borderRadius: '8px' }}>
           <div style={{ color: '#3b82f6', fontSize: '1.5rem', fontWeight: 'bold' }}>3.2 days</div>
@@ -88,7 +88,7 @@ const ActionableItemsPage: React.FC = () => {
       </div>
       
       <div style={{ marginTop: '24px' }}>
-        <h4 style={{ color: '#f1f5f9', marginBottom: '12px' }}>Quick Wins</h4>
+        <h4 style={{ color: '#f1f5f9', marginBottom: '12px' }}>Quick Improvements</h4>
         <ul style={{ color: '#cbd5e1', paddingLeft: '20px' }}>
           <li style={{ marginBottom: '8px' }}>Enable HTTPS redirect (5 minutes)</li>
           <li style={{ marginBottom: '8px' }}>Add security headers to nginx config (10 minutes)</li>
@@ -101,7 +101,7 @@ const ActionableItemsPage: React.FC = () => {
 
   return (
     <DetailPage
-      title="Actionable Items"
+      title="Actionable Security Measures"
       subtitle="Security improvements that can be implemented immediately"
       icon="●"
       totalScore={totalScore}

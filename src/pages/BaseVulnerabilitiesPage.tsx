@@ -3,15 +3,15 @@ import DetailPage from '../components/DetailPage';
 import ExcelExportButton from '../components/ExcelExportButton';
 
 const BaseVulnerabilitiesPage: React.FC = () => {
-  const totalScore = 67.5;
-  const maxScore = 100;
+  const totalScore = 3.25; // Changed from 32.5/100 to 3.25/10
+  const maxScore = 10;
   
   const scoreBreakdown = [
     {
-      factor: 'SQL Injection Vulnerabilities',
-      impact: 25.0,
-      maxImpact: 30,
-      description: 'Critical database security vulnerabilities that allow unauthorized data access',
+      factor: 'SQL Injection Protection',
+      impact: 7.5, // Changed from 75.0/100 to 7.5/10
+      maxImpact: 10,
+      description: 'Database security measures protecting against unauthorized data access',
       recommendations: [
         'Use parameterized queries and prepared statements',
         'Implement input validation and sanitization',
@@ -20,10 +20,10 @@ const BaseVulnerabilitiesPage: React.FC = () => {
       ]
     },
     {
-      factor: 'Cross-Site Scripting (XSS)',
-      impact: 18.5,
-      maxImpact: 25,
-      description: 'Client-side vulnerabilities allowing malicious script execution',
+      factor: 'Cross-Site Scripting (XSS) Protection',
+      impact: 2.6, // Changed from 26.0/100 to 2.6/10
+      maxImpact: 10,
+      description: 'Client-side security measures preventing malicious script execution',
       recommendations: [
         'Implement Content Security Policy (CSP)',
         'Use output encoding for user-generated content',
@@ -32,10 +32,10 @@ const BaseVulnerabilitiesPage: React.FC = () => {
       ]
     },
     {
-      factor: 'Authentication & Authorization Flaws',
-      impact: 15.0,
-      maxImpact: 20,
-      description: 'Weaknesses in user authentication and access control mechanisms',
+      factor: 'Authentication & Authorization Strength',
+      impact: 2.5, // Changed from 25.0/100 to 2.5/10
+      maxImpact: 10,
+      description: 'User authentication and access control security measures',
       recommendations: [
         'Implement multi-factor authentication',
         'Use strong password policies',
@@ -44,10 +44,10 @@ const BaseVulnerabilitiesPage: React.FC = () => {
       ]
     },
     {
-      factor: 'Insecure Direct Object References',
-      impact: 9.0,
-      maxImpact: 15,
-      description: 'Direct access to internal objects without proper authorization checks',
+      factor: 'Direct Object Reference Security',
+      impact: 4.0, // Changed from 40.0/100 to 4.0/10
+      maxImpact: 10,
+      description: 'Authorization checks and secure object access patterns',
       recommendations: [
         'Implement access control checks for all object references',
         'Use indirect reference maps',
@@ -56,10 +56,10 @@ const BaseVulnerabilitiesPage: React.FC = () => {
       ]
     },
     {
-      factor: 'Security Misconfiguration',
-      impact: 8.5,
+      factor: 'Security Configuration Strength',
+      impact: 1.5, // Changed from 15.0/100 to 1.5/10
       maxImpact: 10,
-      description: 'Improper security settings and configurations across the application stack',
+      description: 'Proper security settings and configurations across the application stack',
       recommendations: [
         'Regular security configuration reviews',
         'Remove default accounts and passwords',
@@ -71,19 +71,19 @@ const BaseVulnerabilitiesPage: React.FC = () => {
 
   const additionalInfo = (
     <div>
-      <h3 style={{ color: '#f1f5f9', marginBottom: '16px' }}>Vulnerability Trends</h3>
+      <h3 style={{ color: '#f1f5f9', marginBottom: '16px' }}>Security Trends</h3>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
         <div style={{ background: 'rgba(51, 65, 85, 0.5)', padding: '16px', borderRadius: '8px' }}>
-          <div style={{ color: '#ef4444', fontSize: '1.5rem', fontWeight: 'bold' }}>↗ +12%</div>
-          <div style={{ color: '#cbd5e1', fontSize: '0.875rem' }}>vs Last Month</div>
+          <div style={{ color: '#10b981', fontSize: '1.5rem', fontWeight: 'bold' }}>↗ +12%</div>
+          <div style={{ color: '#cbd5e1', fontSize: '0.875rem' }}>Improvement vs Last Month</div>
         </div>
         <div style={{ background: 'rgba(51, 65, 85, 0.5)', padding: '16px', borderRadius: '8px' }}>
           <div style={{ color: '#f59e0b', fontSize: '1.5rem', fontWeight: 'bold' }}>23</div>
-          <div style={{ color: '#cbd5e1', fontSize: '0.875rem' }}>Critical Issues</div>
+          <div style={{ color: '#cbd5e1', fontSize: '0.875rem' }}>Areas to Strengthen</div>
         </div>
         <div style={{ background: 'rgba(51, 65, 85, 0.5)', padding: '16px', borderRadius: '8px' }}>
           <div style={{ color: '#10b981', fontSize: '1.5rem', fontWeight: 'bold' }}>7</div>
-          <div style={{ color: '#cbd5e1', fontSize: '0.875rem' }}>Fixed This Week</div>
+          <div style={{ color: '#cbd5e1', fontSize: '0.875rem' }}>Improved This Week</div>
         </div>
       </div>
     </div>
@@ -91,8 +91,8 @@ const BaseVulnerabilitiesPage: React.FC = () => {
 
   return (
     <DetailPage
-      title="Base Vulnerabilities"
-      subtitle="Core security vulnerabilities in your application"
+      title="Base Security Assessment"
+      subtitle="Core security strengths in your application"
       icon="▲"
       totalScore={totalScore}
       maxScore={maxScore}
