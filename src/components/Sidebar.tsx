@@ -41,6 +41,38 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggle }) => {
     onToggle?.(isCollapsed);
   }, [isCollapsed, onToggle]);
 
+  // Function to get application name from appId
+  const getApplicationName = (appId: string | undefined): string => {
+    if (!appId) return 'Unknown App';
+    
+    const appNames: { [key: string]: string } = {
+      'production-api': 'Production API',
+      'mobile-app': 'Mobile App',
+      'web-dashboard': 'Web Dashboard',
+      'data-pipeline': 'Data Pipeline',
+      'auth-service': 'Auth Service',
+      'payment-gateway': 'Payment Gateway'
+    };
+    
+    return appNames[appId] || appId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  };
+
+  // Function to get mock server name based on appId
+  const getServerName = (appId: string | undefined): string => {
+    if (!appId) return 'us-east-1a';
+    
+    const serverNames: { [key: string]: string } = {
+      'production-api': 'us-east-1a',
+      'mobile-app': 'us-west-2b',
+      'web-dashboard': 'eu-west-1c',
+      'data-pipeline': 'us-east-1b',
+      'auth-service': 'ap-south-1a',
+      'payment-gateway': 'us-east-1c'
+    };
+    
+    return serverNames[appId] || 'us-east-1a';
+  };
+
   const menuItems = [
     {
       path: `/dashboard/${appId}`,
@@ -133,26 +165,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggle }) => {
           )}
         </div>
       </div>
-
-      {/* System Monitoring Indicator */}
-      <div className="sidebar__system-info">
-        {(!isCollapsed || isHovered) ? (
-          <div className="system-info">
-            <div className="system-info__header">
-              <span className="system-status-dot system-status-dot--active"></span>
-              <span className="system-info__title">Monitoring</span>
-            </div>
-            <div className="system-info__details">
-              <span className="system-name">Production API</span>
-              <span className="system-env">AWS us-east-1</span>
-            </div>
-          </div>
-        ) : (
-          <div className="system-info-collapsed" title="Monitoring: Production API (AWS us-east-1)">
-            <span className="system-status-dot system-status-dot--active"></span>
-          </div>
-        )}
-      </div>
       
       <nav className="sidebar__nav">
         <ul className="sidebar__menu">
@@ -198,7 +210,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggle }) => {
           <>
             <div className="sidebar__status">
               <div className="status-indicator status-indicator--active"></div>
-              <span className="status-text">System Online</span>
+              <span className="status-text">{getApplicationName(appId)} • {getServerName(appId)}</span>
             </div>
             <button 
               className="sidebar__logout-btn"
