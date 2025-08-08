@@ -1,0 +1,146 @@
+.score-card {
+  background: white;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.score-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.score-card--clickable {
+  cursor: pointer;
+}
+
+.score-card--clickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px -3px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.score-card--clickable:active {
+  transform: translateY(-1px);
+  transition: all 0.1s ease;
+}
+
+.score-card--base::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #4f46e5;
+}
+
+.score-card--actionable::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #7c3aed;
+}
+
+.score-card--total::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #dc2626;
+}
+
+.score-card__header {
+  margin-bottom: 24px;
+}
+
+.score-card__title {
+  color: #1a202c;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  line-height: 1.4;
+}
+
+.score-card__subtitle {
+  color: #718096;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.score-card__score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.score-card__value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.score-card__number {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.score-card__max {
+  font-size: 20px;
+  color: #a0aec0;
+  font-weight: 600;
+}
+
+.score-card__progress {
+  width: 100%;
+  height: 8px;
+  background-color: #edf2f7;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.score-card__progress-bar {
+  height: 100%;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 4px;
+}
+
+.score-card__percentage {
+  color: #718096;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .score-card {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .score-card {
+    padding: 20px;
+  }
+  
+  .score-card__number {
+    font-size: 32px;
+  }
+  
+  .score-card__max {
+    font-size: 18px;
+  }
+}

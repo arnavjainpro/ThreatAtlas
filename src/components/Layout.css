@@ -1,0 +1,27 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.layout__main {
+  flex: 1;
+  margin-left: 280px;
+  background: #f7fafc;
+  min-height: 100vh;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.layout__main--sidebar-collapsed {
+  margin-left: 72px;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .layout__main {
+    margin-left: 0;
+  }
+  
+  .layout__main--sidebar-collapsed {
+    margin-left: 0;
+  }
+}
