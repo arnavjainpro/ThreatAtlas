@@ -47,11 +47,21 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggle }) => {
     
     const appNames: { [key: string]: string } = {
       'production-api': 'Production API',
-      'mobile-app': 'Mobile App',
-      'web-dashboard': 'Web Dashboard',
-      'data-pipeline': 'Data Pipeline',
-      'auth-service': 'Auth Service',
-      'payment-gateway': 'Payment Gateway'
+      'web-app': 'Customer Web Portal',
+      'mobile-api': 'Mobile App Backend',
+      'admin-panel': 'Admin Dashboard',
+      'staging-env': 'Staging Environment',
+      'microservice-auth': 'Authentication Service',
+      'payment-gateway': 'Payment Gateway',
+      'notification-service': 'Notification Service',
+      'data-analytics': 'Analytics Engine',
+      'file-storage': 'File Storage API',
+      'search-engine': 'Search Service',
+      'inventory-system': 'Inventory Management',
+      'chat-service': 'Chat Service',
+      'reporting-engine': 'Reporting Engine',
+      'backup-service': 'Backup Service',
+      'monitoring-stack': 'Monitoring Stack'
     };
     
     return appNames[appId] || appId.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
@@ -63,11 +73,21 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggle }) => {
     
     const serverNames: { [key: string]: string } = {
       'production-api': 'us-east-1a',
-      'mobile-app': 'us-west-2b',
-      'web-dashboard': 'eu-west-1c',
-      'data-pipeline': 'us-east-1b',
-      'auth-service': 'ap-south-1a',
-      'payment-gateway': 'us-east-1c'
+      'web-app': 'us-west-2b',
+      'mobile-api': 'eu-west-1c',
+      'admin-panel': 'us-east-1b',
+      'staging-env': 'us-west-1a',
+      'microservice-auth': 'ap-south-1a',
+      'payment-gateway': 'us-east-1c',
+      'notification-service': 'eu-central-1a',
+      'data-analytics': 'us-west-2c',
+      'file-storage': 'ap-southeast-1a',
+      'search-engine': 'eu-west-2a',
+      'inventory-system': 'us-central-1b',
+      'chat-service': 'ap-northeast-1a',
+      'reporting-engine': 'eu-west-3a',
+      'backup-service': 'us-east-2a',
+      'monitoring-stack': 'ca-central-1a'
     };
     
     return serverNames[appId] || 'us-east-1a';

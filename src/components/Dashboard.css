@@ -319,3 +319,293 @@
     font-size: 24px;
   }
 }
+
+/* Security Tools Section */
+.dashboard__tools {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.tools__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tools__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tool-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4a5568;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.tool-button:hover {
+  background: white;
+  border-color: currentColor;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tool-button__icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.tool-button__name {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+/* Tooltip */
+.tool-tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 1000;
+  width: 250px;
+  pointer-events: none;
+}
+
+/* Adjust tooltip position for buttons near the left edge */
+.tool-button:first-child .tool-tooltip,
+.tool-button:nth-child(2) .tool-tooltip {
+  left: 0;
+  transform: translateX(0);
+}
+
+.tool-button:first-child .tool-tooltip::before,
+.tool-button:nth-child(2) .tool-tooltip::before {
+  left: 20px;
+  transform: translateX(0) rotate(45deg);
+}
+
+/* Adjust tooltip position for buttons near the right edge */
+.tool-button:nth-last-child(1) .tool-tooltip,
+.tool-button:nth-last-child(2) .tool-tooltip {
+  left: auto;
+  right: 0;
+  transform: translateX(0);
+}
+
+.tool-button:nth-last-child(1) .tool-tooltip::before,
+.tool-button:nth-last-child(2) .tool-tooltip::before {
+  left: auto;
+  right: 20px;
+  transform: translateX(0) rotate(45deg);
+}
+
+.tool-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-bottom: none;
+  border-right: none;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.tool-button:hover .tool-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+/* Adjust hover transforms for edge tooltips */
+.tool-button:first-child:hover .tool-tooltip,
+.tool-button:nth-child(2):hover .tool-tooltip {
+  transform: translateX(0) translateY(-4px);
+}
+
+.tool-button:nth-last-child(1):hover .tool-tooltip,
+.tool-button:nth-last-child(2):hover .tool-tooltip {
+  transform: translateX(0) translateY(-4px);
+}
+
+.tool-tooltip__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tool-tooltip__icon {
+  font-size: 20px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.tool-tooltip__name {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.tool-tooltip__description {
+  font-size: 12px;
+  color: #718096;
+  line-height: 1.3;
+}
+
+.tool-tooltip__vulnerabilities {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.vulnerability-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  border-radius: 6px;
+  flex: 1;
+  text-align: center;
+}
+
+.vulnerability-item--low {
+  background: #f0fff4;
+  border: 1px solid #c6f6d5;
+}
+
+.vulnerability-item--medium {
+  background: #fffbf0;
+  border: 1px solid #fed7aa;
+}
+
+.vulnerability-item--high {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+}
+
+.vulnerability-item__label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.vulnerability-item--low .vulnerability-item__label {
+  color: #22543d;
+}
+
+.vulnerability-item--medium .vulnerability-item__label {
+  color: #c05621;
+}
+
+.vulnerability-item--high .vulnerability-item__label {
+  color: #c53030;
+}
+
+.vulnerability-item__value {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.vulnerability-item--low .vulnerability-item__value {
+  color: #38a169;
+}
+
+.vulnerability-item--medium .vulnerability-item__value {
+  color: #dd6b20;
+}
+
+.vulnerability-item--high .vulnerability-item__value {
+  color: #e53e3e;
+}
+
+/* Responsive adjustments for tools */
+@media (max-width: 768px) {
+  .tools__grid {
+    gap: 8px;
+  }
+  
+  .tool-button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .tool-button__icon {
+    font-size: 14px;
+  }
+  
+  .tool-tooltip {
+    width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard__tools {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .tools__title {
+    font-size: 14px;
+  }
+  
+  .tool-button {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  
+  .tool-tooltip {
+    width: 180px;
+    padding: 12px;
+  }
+  
+  .vulnerability-item {
+    padding: 6px 4px;
+  }
+  
+  .vulnerability-item__value {
+    font-size: 14px;
+  }
+}

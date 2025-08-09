@@ -39,6 +39,202 @@ const Dashboard: React.FC = () => {
     }
   });
 
+  // Security testing tools configuration
+  const securityTools = [
+    {
+      id: 'zap',
+      name: 'ZAP',
+      description: 'OWASP ZAP Scanner',
+      icon: '🕷️',
+      color: '#4299e1',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 15) + 5,
+        medium: Math.floor(Math.random() * 10) + 3,
+        high: Math.floor(Math.random() * 8) + 2
+      }
+    },
+    {
+      id: 'nessus',
+      name: 'Nessus',
+      description: 'Vulnerability Scanner',
+      icon: '🔍',
+      color: '#48bb78',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 12) + 4,
+        medium: Math.floor(Math.random() * 7) + 2,
+        high: Math.floor(Math.random() * 5) + 1
+      }
+    },
+    {
+      id: 'burp',
+      name: 'Burp Suite',
+      description: 'Web Application Security',
+      icon: '🔒',
+      color: '#ed8936',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 8) + 2,
+        medium: Math.floor(Math.random() * 6) + 1,
+        high: Math.floor(Math.random() * 4) + 1
+      }
+    },
+    {
+      id: 'nikto',
+      name: 'Nikto',
+      description: 'Web Server Scanner',
+      icon: '🌐',
+      color: '#9f7aea',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 10) + 3,
+        medium: Math.floor(Math.random() * 5) + 2,
+        high: Math.floor(Math.random() * 3) + 1
+      }
+    },
+    {
+      id: 'sqlmap',
+      name: 'SQLMap',
+      description: 'SQL Injection Testing',
+      icon: '💉',
+      color: '#e53e3e',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 6) + 1,
+        medium: Math.floor(Math.random() * 4) + 1,
+        high: Math.floor(Math.random() * 2) + 0
+      }
+    },
+    {
+      id: 'wpscan',
+      name: 'WPScan',
+      description: 'WordPress Security',
+      icon: '📝',
+      color: '#38b2ac',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 7) + 2,
+        medium: Math.floor(Math.random() * 3) + 1,
+        high: Math.floor(Math.random() * 2) + 0
+      }
+    },
+    {
+      id: 'nmap',
+      name: 'Nmap',
+      description: 'Network Discovery & Security',
+      icon: '🗺️',
+      color: '#319795',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 12) + 3,
+        medium: Math.floor(Math.random() * 6) + 2,
+        high: Math.floor(Math.random() * 3) + 1
+      }
+    },
+    {
+      id: 'metasploit',
+      name: 'Metasploit',
+      description: 'Penetration Testing Framework',
+      icon: '⚔️',
+      color: '#d53f8c',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 8) + 2,
+        medium: Math.floor(Math.random() * 5) + 2,
+        high: Math.floor(Math.random() * 4) + 1
+      }
+    },
+    {
+      id: 'openvas',
+      name: 'OpenVAS',
+      description: 'Vulnerability Assessment',
+      icon: '🛡️',
+      color: '#00b894',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 14) + 4,
+        medium: Math.floor(Math.random() * 8) + 3,
+        high: Math.floor(Math.random() * 5) + 2
+      }
+    },
+    {
+      id: 'acunetix',
+      name: 'Acunetix',
+      description: 'Web Vulnerability Scanner',
+      icon: '🕸️',
+      color: '#667eea',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 11) + 3,
+        medium: Math.floor(Math.random() * 7) + 2,
+        high: Math.floor(Math.random() * 4) + 1
+      }
+    },
+    {
+      id: 'wapiti',
+      name: 'Wapiti',
+      description: 'Web Application Auditor',
+      icon: '🐛',
+      color: '#f093fb',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 9) + 2,
+        medium: Math.floor(Math.random() * 5) + 1,
+        high: Math.floor(Math.random() * 3) + 0
+      }
+    },
+    {
+      id: 'nuclei',
+      name: 'Nuclei',
+      description: 'Fast Vulnerability Scanner',
+      icon: '⚡',
+      color: '#ffd93d',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 13) + 4,
+        medium: Math.floor(Math.random() * 8) + 2,
+        high: Math.floor(Math.random() * 5) + 1
+      }
+    },
+    {
+      id: 'qualys',
+      name: 'Qualys',
+      description: 'Cloud Security Platform',
+      icon: '☁️',
+      color: '#74b9ff',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 16) + 5,
+        medium: Math.floor(Math.random() * 9) + 3,
+        high: Math.floor(Math.random() * 6) + 2
+      }
+    },
+    {
+      id: 'rapid7',
+      name: 'Rapid7',
+      description: 'InsightVM Security',
+      icon: '🚀',
+      color: '#6c5ce7',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 14) + 4,
+        medium: Math.floor(Math.random() * 8) + 3,
+        high: Math.floor(Math.random() * 5) + 2
+      }
+    },
+    {
+      id: 'checkmarx',
+      name: 'Checkmarx',
+      description: 'Static Code Analysis',
+      icon: '📋',
+      color: '#fd79a8',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 10) + 3,
+        medium: Math.floor(Math.random() * 6) + 2,
+        high: Math.floor(Math.random() * 4) + 1
+      }
+    },
+    {
+      id: 'sonarqube',
+      name: 'SonarQube',
+      description: 'Code Quality & Security',
+      icon: '🔬',
+      color: '#00cec9',
+      vulnerabilities: {
+        low: Math.floor(Math.random() * 12) + 4,
+        medium: Math.floor(Math.random() * 7) + 2,
+        high: Math.floor(Math.random() * 3) + 1
+      }
+    }
+  ];
+
   // Initialize with actual data instead of loading state
   useEffect(() => {
     // Simulate vulnerability scan results - higher scores mean better security
@@ -48,7 +244,7 @@ const Dashboard: React.FC = () => {
     // Invert scores so higher values mean more secure
     const baseScore = 10 - vulnerabilityRisk;
     const actionableScore = 10 - actionableRisk;
-    const totalScore = (baseScore + actionableScore) / 2; // Average for total score out of 10
+    const totalScore = Math.round((baseScore + actionableScore) * 10) / 10; // Sum of base and actionable scores, rounded to 1 decimal
 
     setVulnerabilityData({
       projectName: `${appConfig.name} - ${appConfig.environment}`,
@@ -80,7 +276,7 @@ const Dashboard: React.FC = () => {
     // Invert scores so higher values mean more secure
     const baseScore = 10 - vulnerabilityRisk;
     const actionableScore = 10 - actionableRisk;
-    const totalScore = (baseScore + actionableScore) / 2; // Average for total score out of 10
+    const totalScore = Math.round((baseScore + actionableScore) * 10) / 10; // Sum of base and actionable scores, rounded to 1 decimal
 
     setVulnerabilityData(prev => ({
       ...prev,
@@ -152,10 +348,48 @@ const Dashboard: React.FC = () => {
           title="Total Security Score"
           subtitle="Overall security posture"
           score={vulnerabilityData.scores.totalScore}
-          maxScore={10}
+          maxScore={20}
           type="total"
           onClick={() => navigate(`/dashboard/${appId}/total-vulnerability`)}
         />
+      </div>
+
+      {/* Security Testing Tools Section */}
+      <div className="dashboard__tools">
+        <h3 className="tools__title">Security Testing Tools</h3>
+        <div className="tools__grid">
+          {securityTools.map((tool) => (
+            <div key={tool.id} className="tool-button" style={{ borderColor: tool.color }}>
+              <span className="tool-button__icon">{tool.icon}</span>
+              <span className="tool-button__name">{tool.name}</span>
+              
+              {/* Hover Tooltip */}
+              <div className="tool-tooltip">
+                <div className="tool-tooltip__header">
+                  <span className="tool-tooltip__icon">{tool.icon}</span>
+                  <div>
+                    <div className="tool-tooltip__name">{tool.name}</div>
+                    <div className="tool-tooltip__description">{tool.description}</div>
+                  </div>
+                </div>
+                <div className="tool-tooltip__vulnerabilities">
+                  <div className="vulnerability-item vulnerability-item--low">
+                    <span className="vulnerability-item__label">Low</span>
+                    <span className="vulnerability-item__value">{tool.vulnerabilities.low}</span>
+                  </div>
+                  <div className="vulnerability-item vulnerability-item--medium">
+                    <span className="vulnerability-item__label">Medium</span>
+                    <span className="vulnerability-item__value">{tool.vulnerabilities.medium}</span>
+                  </div>
+                  <div className="vulnerability-item vulnerability-item--high">
+                    <span className="vulnerability-item__label">High</span>
+                    <span className="vulnerability-item__value">{tool.vulnerabilities.high}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {vulnerabilityData.details && (
@@ -196,10 +430,10 @@ const Dashboard: React.FC = () => {
       <div className="dashboard__footer">
         <p className="footer__text">
           Powered by ThreatAtlas Security Engine • 
-          <span className={`status ${getSeverityClass(10 - vulnerabilityData.scores.totalScore, 10)}`}>
-            {vulnerabilityData.scores.totalScore >= 8 ? 'Excellent Security' : 
-             vulnerabilityData.scores.totalScore >= 6 ? 'Good Security' :
-             vulnerabilityData.scores.totalScore >= 4 ? 'Moderate Security' : 'Needs Improvement'}
+          <span className={`status ${getSeverityClass(20 - vulnerabilityData.scores.totalScore, 20)}`}>
+            {vulnerabilityData.scores.totalScore >= 16 ? 'Excellent Security' : 
+             vulnerabilityData.scores.totalScore >= 12 ? 'Good Security' :
+             vulnerabilityData.scores.totalScore >= 8 ? 'Moderate Security' : 'Needs Improvement'}
           </span>
         </p>
       </div>

@@ -100,6 +100,106 @@ const ApplicationSelector: React.FC = () => {
       riskLevel: 'high',
       vulnerabilityCount: 27,
       icon: '🔐'
+    },
+    {
+      id: 'payment-gateway',
+      name: 'Payment Gateway',
+      description: 'Secure payment processing service',
+      environment: 'Production',
+      lastScan: '1 hour ago',
+      riskLevel: 'critical',
+      vulnerabilityCount: 42,
+      icon: '💳'
+    },
+    {
+      id: 'notification-service',
+      name: 'Notification Service',
+      description: 'Email and push notification system',
+      environment: 'Production',
+      lastScan: '5 hours ago',
+      riskLevel: 'low',
+      vulnerabilityCount: 12,
+      icon: '📧'
+    },
+    {
+      id: 'data-analytics',
+      name: 'Analytics Engine',
+      description: 'Real-time data processing and analytics',
+      environment: 'Production',
+      lastScan: '3 hours ago',
+      riskLevel: 'medium',
+      vulnerabilityCount: 18,
+      icon: '📊'
+    },
+    {
+      id: 'file-storage',
+      name: 'File Storage API',
+      description: 'Document and media file management',
+      environment: 'Production',
+      lastScan: '7 hours ago',
+      riskLevel: 'medium',
+      vulnerabilityCount: 21,
+      icon: '📁'
+    },
+    {
+      id: 'search-engine',
+      name: 'Search Service',
+      description: 'Elasticsearch-based search functionality',
+      environment: 'Production',
+      lastScan: '2 hours ago',
+      riskLevel: 'low',
+      vulnerabilityCount: 9,
+      icon: '🔍'
+    },
+    {
+      id: 'inventory-system',
+      name: 'Inventory Management',
+      description: 'Product catalog and inventory tracking',
+      environment: 'Production',
+      lastScan: '4 hours ago',
+      riskLevel: 'high',
+      vulnerabilityCount: 35,
+      icon: '📦'
+    },
+    {
+      id: 'chat-service',
+      name: 'Chat Service',
+      description: 'Real-time messaging and communication',
+      environment: 'Production',
+      lastScan: '1 hour ago',
+      riskLevel: 'medium',
+      vulnerabilityCount: 16,
+      icon: '💬'
+    },
+    {
+      id: 'reporting-engine',
+      name: 'Reporting Engine',
+      description: 'Business intelligence and reporting',
+      environment: 'Production',
+      lastScan: '8 hours ago',
+      riskLevel: 'low',
+      vulnerabilityCount: 7,
+      icon: '📈'
+    },
+    {
+      id: 'backup-service',
+      name: 'Backup Service',
+      description: 'Automated data backup and recovery',
+      environment: 'Production',
+      lastScan: '6 hours ago',
+      riskLevel: 'medium',
+      vulnerabilityCount: 13,
+      icon: '💾'
+    },
+    {
+      id: 'monitoring-stack',
+      name: 'Monitoring Stack',
+      description: 'System monitoring and alerting platform',
+      environment: 'Production',
+      lastScan: '30 minutes ago',
+      riskLevel: 'low',
+      vulnerabilityCount: 5,
+      icon: '📡'
     }
   ];
 
