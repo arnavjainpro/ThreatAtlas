@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './auth/AuthProvider';
-import { supabase } from './lib/supabase';
 import ApplicationSelector from './components/ApplicationSelector';
 import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
+import SecurityDashboard from './components/SecurityDashboard';
 import BaseVulnerabilitiesPage from './pages/BaseVulnerabilitiesPage';
 import ActionableItemsPage from './pages/ActionableItemsPage';
 import TotalVulnerabilityPage from './pages/TotalVulnerabilityPage';
@@ -13,15 +13,13 @@ import InfrastructurePage from './pages/InfrastructurePage';
 import CompliancePage from './pages/CompliancePage';
 import ThreatModelingPage from './pages/ThreatModelingPage';
 import ReportsPage from './pages/ReportsPage';
+import SecurityToolPage from './components/SecurityToolPage';
 import Login from './pages/Login';
 import RequireAuth from './components/RequireAuth';
 import RequireOrg from './components/RequireOrg';
 import './App.css'
 
 function App() {
-  // Test Supabase connection
-  console.log('Supabase client:', supabase);
-  
   return (
     <AuthProvider>
       <Router>
@@ -47,6 +45,7 @@ function App() {
             </RequireAuth>
           }>
             <Route index element={<Dashboard />} />
+            <Route path="security" element={<SecurityDashboard />} />
             <Route path="base-vulnerabilities" element={<BaseVulnerabilitiesPage />} />
             <Route path="actionable-items" element={<ActionableItemsPage />} />
             <Route path="total-vulnerability" element={<TotalVulnerabilityPage />} />
@@ -56,6 +55,7 @@ function App() {
             <Route path="compliance" element={<CompliancePage />} />
             <Route path="threat-modeling" element={<ThreatModelingPage />} />
             <Route path="reports" element={<ReportsPage />} />
+            <Route path="tools/:toolId" element={<SecurityToolPage />} />
           </Route>
         </Routes>
       </Router>

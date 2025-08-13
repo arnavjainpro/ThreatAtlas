@@ -1,0 +1,126 @@
+.run-scan-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.run-scan-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+  min-height: 44px;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 8px;
+}
+
+.run-scan-btn:hover:not(:disabled),
+.run-scan-btn:focus:not(:disabled) {
+  background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+  box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3);
+  transform: translateY(-1px);
+  z-index: 1000;
+}
+
+.run-scan-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+}
+
+.run-scan-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.run-scan-btn--scanning {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 2px 4px rgba(5, 150, 105, 0.2);
+}
+
+.run-scan-btn--scanning:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: none;
+}
+
+.run-scan-btn__icon {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.run-scan-btn__icon--spinning {
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.run-scan-btn__text {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.last-scan-time {
+  font-size: 12px;
+  color: #6b7280;
+  font-style: italic;
+  text-align: right;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .run-scan-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .run-scan-btn__text {
+    display: none;
+  }
+  
+  .run-scan-btn__icon {
+    font-size: 18px;
+  }
+
+  .run-scan-container {
+    align-items: center;
+  }
+
+  .last-scan-time {
+    text-align: center;
+  }
+}
+
+/* Button group styling when both buttons are present */
+.tool-header__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .tool-header__actions {
+    align-items: stretch;
+    width: 100%;
+  }
+}

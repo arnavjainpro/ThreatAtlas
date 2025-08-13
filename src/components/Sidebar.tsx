@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import { NavLink, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../auth/AuthProvider';
 import './Sidebar.css';
 
@@ -12,7 +12,11 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggle }) => {
   const [isHovered, setIsHovered] = useState(false);
   const { appId } = useParams<{ appId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { signOut } = useAuth();
+
+  // Check if we're on a tool page
+  const isOnToolPage = location.pathname.includes('/tools/');
 
   const handleToggle = () => {
     const newCollapsed = !isCollapsed;
@@ -163,15 +167,15 @@ const Sidebar: React.FC<SidebarProps> = ({ onToggle }) => {
       onMouseLeave={handleMouseLeave}
     >
       <div className="sidebar__header">
-        {/* Back to Applications button */}
+        {/* Back button */}
         {(!isCollapsed || isHovered) && (
           <button 
             className="sidebar__back-btn"
-            onClick={() => navigate('/')}
-            title="Back to Application Selection"
+            onClick={() => navigate(isOnToolPage ? `/dashboard/${appId}` : '/')}
+            title={isOnToolPage ? "Back to Dashboard" : "Back to Application Selection"}
           >
             <span className="back-icon">←</span>
-            <span className="back-text">Applications</span>
+            <span className="back-text">{isOnToolPage ? "Dashboard" : "Applications"}</span>
           </button>
         )}
         

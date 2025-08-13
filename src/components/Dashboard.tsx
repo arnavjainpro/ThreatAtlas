@@ -359,7 +359,12 @@ const Dashboard: React.FC = () => {
         <h3 className="tools__title">Security Testing Tools</h3>
         <div className="tools__grid">
           {securityTools.map((tool) => (
-            <div key={tool.id} className="tool-button" style={{ borderColor: tool.color }}>
+            <div 
+              key={tool.id} 
+              className="tool-button" 
+              style={{ borderColor: tool.color }}
+              onClick={() => navigate(`/dashboard/${appId}/tools/${tool.id}`)}
+            >
               <span className="tool-button__icon">{tool.icon}</span>
               <span className="tool-button__name">{tool.name}</span>
               

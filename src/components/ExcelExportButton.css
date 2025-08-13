@@ -13,12 +13,16 @@
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
   min-height: 44px;
+  position: relative;
+  z-index: 1;
 }
 
-.excel-export-btn:hover {
+.excel-export-btn:hover,
+.excel-export-btn:focus {
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
   box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
   transform: translateY(-1px);
+  z-index: 1000;
 }
 
 .excel-export-btn:active {
