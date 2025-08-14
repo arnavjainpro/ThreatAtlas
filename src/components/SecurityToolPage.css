@@ -543,3 +543,141 @@
     max-width: 60px;
   }
 }
+
+/* Pagination Controls */
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  margin: 2rem auto 1rem;
+  max-width: fit-content;
+}
+
+.pagination-numbers {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.pagination-number {
+  background: transparent;
+  color: #6b7280;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.pagination-number:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.pagination-number:active {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.pagination-number:hover:not(.active) {
+  color: #374151;
+}
+
+.pagination-number.active {
+  background: #e5e7eb;
+  color: #374151;
+  font-weight: 600;
+}
+
+.pagination-nav {
+  background: transparent;
+  color: #111827;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.15s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-nav:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.pagination-nav:active {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.pagination-nav:hover:not(:disabled) {
+  color: #6b7280;
+}
+
+.pagination-nav:disabled {
+  color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  background: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  border: 2px solid #e5e7eb;
+  font-weight: 600;
+  color: #374151;
+  min-width: 140px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 768px) {
+  .pagination-controls {
+    padding: 0.75rem 0;
+    gap: 0.25rem;
+  }
+
+  .pagination-info {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .pagination-numbers {
+    gap: 0.125rem;
+  }
+
+  .pagination-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+  }
+
+  .pagination-nav {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+}

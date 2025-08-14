@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { SecurityScanService } from '../services/securityScanService';
-import { securityScanSupabase } from '../lib/supabase';
 import ExcelExportButton from './ExcelExportButton';
 import RunScanButton from './RunScanButton';
 import './SecurityToolPage.css';
@@ -41,6 +40,8 @@ const SecurityToolPage: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [loading, setLoading] = useState(false);
   const [isZapTool, setIsZapTool] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(25);
 
   const toolsConfig: Record<string, SecurityTool> = {
     zap: {
@@ -206,47 +207,6 @@ const SecurityToolPage: React.FC = () => {
   };
 
   const currentTool = toolsConfig[toolId || ''];
-
-  // Function to load real ZAP data from Airflow/Supabase
-  const [connectionTest, setConnectionTest] = useState<any>(null);
-
-  const testSupabaseConnection = async () => {
-    console.log('Testing Supabase connection...');
-    try {
-      // Test basic connection
-      const testResult = await SecurityScanService.testConnection();
-      console.log('Connection test:', testResult);
-      
-      // Get vulnerability data directly (new schema)
-      const vulns = await SecurityScanService.getVulnerabilityData(10);
-      console.log('💎 Direct vulnerability data:', vulns);
-      
-      // Get scan data
-      const scans = await SecurityScanService.getScanData(5);
-      console.log('📊 Scan data:', scans);
-      
-      // Group vulnerabilities by severity
-      const severityGroups = vulns.reduce((groups: any, vuln: any) => {
-        groups[vuln.severity] = (groups[vuln.severity] || 0) + 1;
-        return groups;
-      }, {});
-
-      setConnectionTest({
-        connection: testResult,
-        vulnerabilityData: vulns.slice(0, 5), // First 5 for display
-        scanData: scans.slice(0, 3), // First 3 scans
-        totalVulnerabilities: vulns.length,
-        severityBreakdown: severityGroups,
-        timestamp: new Date().toISOString()
-      });
-    } catch (error) {
-      console.error('Connection test failed:', error);
-      setConnectionTest({
-        error: error,
-        timestamp: new Date().toISOString()
-      });
-    }
-  };
 
   const loadRealZapData = async (): Promise<Vulnerability[]> => {
     try {
@@ -460,7 +420,18 @@ const SecurityToolPage: React.FC = () => {
     }
 
     setFilteredVulnerabilities(filtered);
+    setCurrentPage(1); // Reset to first page when filters change
   }, [severityFilter, statusFilter, vulnerabilities]);
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredVulnerabilities.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedVulnerabilities = filteredVulnerabilities.slice(startIndex, endIndex);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
@@ -502,17 +473,6 @@ const SecurityToolPage: React.FC = () => {
 
   return (
     <div className="security-tool-page">
-      {/* Real Data Banner for ZAP */}
-      {isZapTool && (
-        <div className="real-data-banner">
-          <span className="banner-icon">🔴</span>
-          <div className="banner-content">
-            <strong>Live Airflow Data</strong>
-            <p>Showing real ZAP scan results from your Airflow pipeline</p>
-          </div>
-        </div>
-      )}
-
       {/* Loading Indicator */}
       {loading && (
         <div className="loading-overlay">
@@ -536,44 +496,6 @@ const SecurityToolPage: React.FC = () => {
                 <div className="tool-header__actions">
           <ExcelExportButton pageType="total" />
           <RunScanButton toolId={toolId || ''} toolName={currentTool?.name || ''} onScanComplete={handleScanComplete} />
-          {/* Temporary debug button - remove after fixing Airflow DAG */}
-          <button 
-            onClick={testSupabaseConnection}
-            style={{
-              background: '#e2e8f0',
-              border: '1px solid #cbd5e0',
-              borderRadius: '8px',
-              padding: '8px 16px',
-              fontSize: '12px',
-              cursor: 'pointer'
-            }}
-          >
-            Debug DB
-          </button>
-        </div>
-      </div>
-
-      {/* Tool Capabilities */}
-      <div className="tool-capabilities">
-        <div className="capabilities-section">
-          <h3>Key Capabilities</h3>
-          <div className="capabilities-list">
-            {currentTool.capabilities.map((capability, index) => (
-              <span key={index} className="capability-tag">
-                {capability}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="capabilities-section">
-          <h3>Supported Targets</h3>
-          <div className="capabilities-list">
-            {currentTool.supportedTargets.map((target, index) => (
-              <span key={index} className="target-tag">
-                {target}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -632,81 +554,17 @@ const SecurityToolPage: React.FC = () => {
           </select>
         </div>
         <div className="filter-info">
-          Showing {filteredVulnerabilities.length} of {vulnerabilities.length} vulnerabilities
+          Showing {startIndex + 1}-{Math.min(endIndex, filteredVulnerabilities.length)} of {filteredVulnerabilities.length} vulnerabilities
           {isZapTool && (
             <span className="data-source-indicator">
               {vulnerabilities.length > 0 && vulnerabilities[0].id.includes('VULN-') ? 
                 ' • Mock Data (No vulnerabilities in database - check Airflow DAG)' : 
-                ` • Live Airflow Data 🔴 (${vulnerabilities.length >= 80 ? 'Full Dataset' : 'Partial Dataset'})`
+                ` • ${vulnerabilities.length >= 80 ? 'Full Dataset' : 'Partial Dataset'} (${vulnerabilities.length} vulnerabilities)`
               }
             </span>
           )}
         </div>
       </div>
-
-      {/* Connection Test Results */}
-      {connectionTest && (
-        <div style={{ 
-          background: connectionTest.error ? '#fee2e2' : '#f0f9ff', 
-          border: `1px solid ${connectionTest.error ? '#fecaca' : '#bae6fd'}`,
-          padding: '16px', 
-          borderRadius: '8px', 
-          marginBottom: '24px',
-          fontSize: '12px',
-          fontFamily: 'monospace'
-        }}>
-          <h4 style={{ margin: '0 0 8px 0' }}>🔍 Real Data Connection Test:</h4>
-          {connectionTest.error ? (
-            <p style={{ color: '#dc2626' }}>❌ Error: {connectionTest.error.message}</p>
-          ) : (
-            <div>
-              <p>✅ Connection: {connectionTest.connection.success ? 'Success' : 'Failed'}</p>
-              <p>📊 <strong>Total vulnerabilities found: {connectionTest.totalVulnerabilities || 0}</strong></p>
-              
-              {connectionTest.severityBreakdown && Object.keys(connectionTest.severityBreakdown).length > 0 && (
-                <div>
-                  <p><strong>🎯 Severity Breakdown:</strong></p>
-                  <ul style={{ margin: '8px 0', paddingLeft: '20px' }}>
-                    {Object.entries(connectionTest.severityBreakdown).map(([severity, count]) => (
-                      <li key={severity}>
-                        {severity}: {count as number} vulnerabilities
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {connectionTest.vulnerabilityData && connectionTest.vulnerabilityData.length > 0 && (
-                <div>
-                  <p><strong>🔍 Sample Vulnerabilities:</strong></p>
-                  <ul style={{ margin: '8px 0', paddingLeft: '20px' }}>
-                    {connectionTest.vulnerabilityData.map((vuln: any, idx: number) => (
-                      <li key={idx} style={{ fontSize: '10px', marginBottom: '4px' }}>
-                        <strong>{vuln.title}</strong> ({vuln.severity})
-                        <br />Tool: {vuln.tool} | URL: {vuln.url}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {connectionTest.scanData && connectionTest.scanData.length > 0 && (
-                <div>
-                  <p><strong>📊 Recent Scans:</strong></p>
-                  <ul style={{ margin: '8px 0', paddingLeft: '20px' }}>
-                    {connectionTest.scanData.map((scan: any, idx: number) => (
-                      <li key={idx} style={{ fontSize: '10px' }}>
-                        Target: {scan.target} | Status: {scan.status} | Started: {scan.started_at}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-          <p style={{ fontSize: '10px', color: '#6b7280' }}>Test run at: {connectionTest.timestamp}</p>
-        </div>
-      )}
 
       {/* Vulnerabilities Table */}
       <div className="vulnerabilities-table">
@@ -727,7 +585,7 @@ const SecurityToolPage: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredVulnerabilities.map((vuln) => (
+            {paginatedVulnerabilities.map((vuln) => (
               <tr key={vuln.id} className="vulnerability-row">
                 <td className="vuln-id">{vuln.id}</td>
                 <td className="vuln-date">{vuln.scan_time}</td>
@@ -763,31 +621,46 @@ const SecurityToolPage: React.FC = () => {
       {filteredVulnerabilities.length === 0 && (
         <div className="no-results">
           <h3>No vulnerabilities found</h3>
-          {isZapTool && connectionTest && connectionTest.allVulnerabilitiesInDB === 0 ? (
-            <div>
-              <p><strong>🔍 Data Pipeline Analysis:</strong></p>
-              <p>✅ Supabase connection is working</p>
-              <p>✅ ZAP scans are running successfully ({connectionTest.sampleScans?.length || 0} recent scans found)</p>
-              <p>❌ No vulnerabilities are being stored in the database</p>
-              <br />
-              <p><strong>📋 Likely Issue:</strong></p>
-              <p>Your Airflow ZAP DAG is running scans but not parsing/storing the vulnerability results.</p>
-              <br />
-              <p><strong>🛠️ Troubleshooting Steps:</strong></p>
-              <ol style={{ textAlign: 'left', display: 'inline-block' }}>
-                <li>Check Airflow DAG logs for ZAP result parsing errors</li>
-                <li>Verify ZAP scan output format is being processed correctly</li>
-                <li>Ensure vulnerability data is being inserted into the 'vulnerabilities' table</li>
-                <li>Test scanning a known vulnerable target (testphp.vulnweb.com should find multiple vulnerabilities)</li>
-              </ol>
-              <br />
-              <p style={{ fontSize: '14px', color: '#6b7280', marginTop: '16px' }}>
-                <em>Showing mock data below for UI testing purposes.</em>
-              </p>
-            </div>
-          ) : (
-            <p>No vulnerabilities match the current filter criteria.</p>
-          )}
+          <p>No vulnerabilities match the current filter criteria.</p>
+        </div>
+      )}
+
+      {/* Pagination Controls */}
+      {filteredVulnerabilities.length > 25 && (
+        <div className="pagination-controls">
+          {/* Previous Button */}
+          <button 
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="pagination-nav"
+          >
+            &#8249;
+          </button>
+          
+          {/* Page Numbers */}
+          <div className="pagination-numbers">
+            {Array.from({ length: totalPages }, (_, index) => {
+              const pageNum = index + 1;
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => handlePageChange(pageNum)}
+                  className={`pagination-number ${currentPage === pageNum ? 'active' : ''}`}
+                >
+                  {pageNum}
+                </button>
+              );
+            })}
+          </div>
+          
+          {/* Next Button */}
+          <button 
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="pagination-nav"
+          >
+            &#8250;
+          </button>
         </div>
       )}
     </div>
