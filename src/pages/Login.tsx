@@ -1,6 +1,7 @@
 // src/pages/Login.tsx
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
+import './Login.css'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -8,6 +9,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
+  const [showPassword, setShowPassword] = useState(false)
 
   async function signInWithPassword() {
     try {
@@ -19,98 +21,225 @@ export default function Login() {
         throw new Error('Please enter both email and password')
       }
 
-      console.log('Attempting to sign in with:', { email, supabaseUrl: import.meta.env.VITE_SUPABASE_URL })
+      console.log('Attempting to log in with:', { email, supabaseUrl: import.meta.env.VITE_SUPABASE_URL })
       
       const { data, error } = await supabase.auth.signInWithPassword({ email, password })
       
-      console.log('Sign in response:', { data, error })
+      console.log('Log in response:', { data, error })
       
       if (error) {
         console.error('Supabase auth error:', error)
         throw error
       }
       
-      setMessage('Signed in successfully')
+      setMessage('Logged in successfully')
       // Redirect to dashboard after a short delay
       setTimeout(() => {
         window.location.href = '/'
       }, 500)
     } catch (e: any) {
       console.error('Login error:', e)
-      setError(e.message || 'An error occurred during sign in')
+      setError(e.message || 'An error occurred during login')
     } finally {
       setLoading(false)
     }
   }
 
-  async function sendMagicLink() {
+  async function signInWithGoogle() {
     try {
       setLoading(true)
       setError(null)
       setMessage(null)
       
-      if (!email) {
-        throw new Error('Please enter your email address')
-      }
-
-      console.log('Sending magic link to:', email)
-      
-      const { data, error } = await supabase.auth.signInWithOtp({ 
-        email, 
-        options: { emailRedirectTo: window.location.origin } 
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin
+        }
       })
       
-      console.log('Magic link response:', { data, error })
-      
       if (error) {
-        console.error('Magic link error:', error)
+        console.error('Google auth error:', error)
         throw error
       }
-      
-      setMessage('Magic link sent. Check your email')
     } catch (e: any) {
-      console.error('Magic link error:', e)
-      setError(e.message || 'An error occurred sending magic link')
+      console.error('Google login error:', e)
+      setError(e.message || 'An error occurred during Google login')
     } finally {
       setLoading(false)
     }
   }
 
+  async function signInWithFacebook() {
+    try {
+      setLoading(true)
+      setError(null)
+      setMessage(null)
+      
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'facebook',
+        options: {
+          redirectTo: window.location.origin
+        }
+      })
+      
+      if (error) {
+        console.error('Facebook auth error:', error)
+        throw error
+      }
+    } catch (e: any) {
+      console.error('Facebook login error:', e)
+      setError(e.message || 'An error occurred during Facebook login')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleForgotPassword = () => {
+    // Handle forgot password logic here
+    console.log('Forgot password clicked')
+  }
+
+  const handleSignUp = () => {
+    // Handle sign up navigation here
+    console.log('Sign up clicked')
+  }
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-md rounded-2xl bg-slate-900 p-6 shadow-xl">
-        <h1 className="text-xl font-semibold mb-4">Sign in</h1>
+    <div className="login-container">
+      <div className="login-card">
+        {/* Left Side - Login Form */}
+        <div className="login-form-section">
+          <div className="login-header">
+            <div className="brand-logo">
+              <div className="logo-icon">🛡️</div>
+              <span className="brand-name">ThreatAtlas</span>
+            </div>
+            <h1 className="login-title">Log in to your account.</h1>
+            <p className="login-subtitle">Enter your email address and password to log in.</p>
+          </div>
 
-        {error && <div className="mb-3 rounded bg-red-600/20 p-2 text-red-300">{error}</div>}
-        {message && <div className="mb-3 rounded bg-emerald-600/20 p-2 text-emerald-300">{message}</div>}
+          {error && <div className="error-message">{error}</div>}
+          {message && <div className="success-message">{message}</div>}
 
-        <label className="block mb-3">
-          <div className="text-sm text-slate-300 mb-1">Email</div>
-          <input
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 outline-none"
-            type="email"
-            placeholder="you@example.com"
-          />
-        </label>
+          <form onSubmit={(e) => { e.preventDefault(); signInWithPassword(); }}>
+            <div className="form-group">
+              <div className="input-wrapper">
+                <span className="input-icon">✉️</span>
+                <input
+                  type="email"
+                  className="form-input"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
 
-        <label className="block mb-4">
-          <div className="text-sm text-slate-300 mb-1">Password</div>
-          <input
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            className="w-full rounded-lg border border-slate-700 bg-slate-800 p-2 outline-none"
-            type="password"
-            placeholder="••••••••"
-          />
-        </label>
+            <div className="form-group">
+              <div className="input-wrapper">
+                <span className="input-icon">🔒</span>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  className="form-input"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? '🙈' : '👁️'}
+                </button>
+              </div>
+            </div>
 
-        <div className="flex items-center gap-2">
-          <button onClick={signInWithPassword} disabled={loading}
-                  className="rounded-lg bg-indigo-600 px-4 py-2 disabled:opacity-50">Sign in</button>
-          <button onClick={sendMagicLink} disabled={loading}
-                  className="rounded-lg border border-slate-700 px-4 py-2">Email me a magic link</button>
+            <div className="forgot-password">
+              <button type="button" className="forgot-link" onClick={handleForgotPassword}>
+                Forgot password?
+              </button>
+            </div>
+
+            <button 
+              type="submit" 
+              className="login-button" 
+              disabled={loading}
+            >
+              {loading ? 'Logging in...' : 'Login'}
+            </button>
+          </form>
+
+          <div className="divider">
+            <span>or</span>
+          </div>
+
+          <div className="social-buttons">
+            <button 
+              className="social-button google" 
+              onClick={signInWithGoogle}
+              disabled={loading}
+            >
+              <span className="social-icon">🇬</span>
+              Google
+            </button>
+            <button 
+              className="social-button facebook" 
+              onClick={signInWithFacebook}
+              disabled={loading}
+            >
+              <span className="social-icon">📘</span>
+              Facebook
+            </button>
+          </div>
+
+          <div className="signup-link">
+            Don't you have an account? <button className="link-button" onClick={handleSignUp}>Sign Up</button>
+          </div>
+        </div>
+
+        {/* Right Side - Hero Section */}
+        <div className="hero-section">
+          <div className="hero-content">
+            <div className="hero-icon">📊</div>
+            <h2 className="hero-title">The easiest way to manage your security portfolio.</h2>
+            <p className="hero-subtitle">Join the ThreatAtlas community now!</p>
+          </div>
+          
+          <div className="dashboard-preview">
+            <div className="preview-card">
+              <div className="preview-header">
+                <div className="preview-tabs">
+                  <div className="tab active">Overview</div>
+                  <div className="tab">Reports</div>
+                  <div className="tab">Settings</div>
+                </div>
+              </div>
+              <div className="preview-content">
+                <div className="chart-placeholder">
+                  <svg className="chart-svg" viewBox="0 0 300 60">
+                    <path d="M0,40 Q75,20 150,30 T300,25" stroke="rgba(255,255,255,0.8)" strokeWidth="2" fill="none"/>
+                    <circle cx="50" cy="35" r="3" fill="rgba(255,255,255,0.9)"/>
+                    <circle cx="150" cy="30" r="3" fill="rgba(255,255,255,0.9)"/>
+                    <circle cx="250" cy="25" r="3" fill="rgba(255,255,255,0.9)"/>
+                  </svg>
+                </div>
+                <div className="stats-row">
+                  <div className="stat-item">
+                    <div className="stat-value">125,762.98</div>
+                    <div className="stat-label">Total Vulnerabilities</div>
+                  </div>
+                  <div className="stat-item">
+                    <div className="stat-value">+0.134900</div>
+                    <div className="stat-label">+0.39%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

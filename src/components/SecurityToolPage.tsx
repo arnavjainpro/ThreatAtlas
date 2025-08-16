@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { SecurityScanService } from '../services/securityScanService';
 import ExcelExportButton from './ExcelExportButton';
 import RunScanButton from './RunScanButton';
+import Pagination from './Pagination';
 import './SecurityToolPage.css';
 
 interface SecurityTool {
@@ -627,41 +628,11 @@ const SecurityToolPage: React.FC = () => {
 
       {/* Pagination Controls */}
       {filteredVulnerabilities.length > 25 && (
-        <div className="pagination-controls">
-          {/* Previous Button */}
-          <button 
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="pagination-nav"
-          >
-            &#8249;
-          </button>
-          
-          {/* Page Numbers */}
-          <div className="pagination-numbers">
-            {Array.from({ length: totalPages }, (_, index) => {
-              const pageNum = index + 1;
-              return (
-                <button
-                  key={pageNum}
-                  onClick={() => handlePageChange(pageNum)}
-                  className={`pagination-number ${currentPage === pageNum ? 'active' : ''}`}
-                >
-                  {pageNum}
-                </button>
-              );
-            })}
-          </div>
-          
-          {/* Next Button */}
-          <button 
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="pagination-nav"
-          >
-            &#8250;
-          </button>
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       )}
     </div>
   );
